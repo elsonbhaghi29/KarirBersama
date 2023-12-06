@@ -31,40 +31,57 @@
                     <div class="card mb-4 mx-4">
                         <div class="card-body p-4">
                             <h1>Register</h1>
+                            <?php if (!empty(session()->getFlashdata('error'))) : ?>
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <h4>Periksa Entrian Form</h4>
+                                    </hr />
+                                    <?php echo session()->getFlashdata('error'); ?>
+                                </div>
+                            <?php endif; ?>
                             <p class="text-medium-emphasis">Create your account</p>
-                            <div class="input-group mb-3"><span class="input-group-text">
-                                    <svg class="icon">
-                                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
-
-                                    </svg></span>
-                                <input class="form-control" type="text" placeholder="Username">
-                            </div>
-                            <div class="input-group mb-3"><span class="input-group-text">
-                                    <svg class="icon">
-                                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-envelope-open') ?>"></use>
-                                    </svg></span>
-                                <input class="form-control" type="text" placeholder="Email">
-                            </div>
-                            <div class="input-group mb-3"><span class="input-group-text">
-                                    <svg class="icon">
-                                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
-                                    </svg></span>
-                                <input class="form-control" type="password" placeholder="Password">
-                            </div>
-                            <div class="input-group mb-1"><span class="input-group-text">
-                                    <svg class="icon">
-                                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
-                                    </svg></span>
-                                <input class="form-control" type="password" placeholder="Confirm password">
-                            </div>
-                            <label for="status">Status:</label>
-                            <div class="input-group mb-4">
-                                <select class="form-select" id="status" name="status">
-                                    <option value="pelamar">Pelamar</option>
-                                    <option value="perusahaan">Perusahaan</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-block btn-success" type="button">Create Account</button>
+                            <form method="post" action="<?= base_url(); ?>/register/proses">
+                                <?= csrf_field(); ?>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">
+                                        <svg class="icon">
+                                            <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
+                                        </svg>
+                                    </span>
+                                    <input class="form-control" type="text" placeholder="Username" name="username">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">
+                                        <svg class="icon">
+                                            <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-envelope-open') ?>"></use>
+                                        </svg>
+                                    </span>
+                                    <input class="form-control" type="text" placeholder="Nama" name="nama">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">
+                                        <svg class="icon">
+                                            <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
+                                        </svg>
+                                    </span>
+                                    <input class="form-control" type="password" placeholder="Password" name="password">
+                                </div>
+                                <div class="input-group mb-1">
+                                    <span class="input-group-text">
+                                        <svg class="icon">
+                                            <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
+                                        </svg>
+                                    </span>
+                                    <input class="form-control" type="password" placeholder="Confirm password" name="confirm-password">
+                                </div>
+                                <label for="status">Status:</label>
+                                <div class="input-group mb-4">
+                                    <select class="form-select" id="status" name="status">
+                                        <option value="pelamar">Pelamar</option>
+                                        <option value="perusahaan">Perusahaan</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-block btn-success" type="submit">Create Account</button>
+                            </form>
                         </div>
                     </div>
                 </div>
