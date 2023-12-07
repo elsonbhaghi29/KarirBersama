@@ -16,6 +16,8 @@ $routes->get('/login', 'Home::index');
 $routes->post('/login/proses', 'Home::login');
 $routes->get('/logout', 'Home::logout');
 
+// main
+
 $routes->get('admin/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
 
 $routes->get('perusahaan/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
