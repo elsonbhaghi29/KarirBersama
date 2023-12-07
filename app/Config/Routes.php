@@ -6,15 +6,20 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-$routes->get('/home', 'home::index');
-$routes->get('/', 'UserController::index');
-
-
 // Register
 $routes->get('/register', 'UserController::register');
 $routes->post('/register/proses', 'UserController::registerProses');
 
 // login
-$routes->get('/login', 'UserController::index');
-$routes->post('/login/proses', 'UserController::dashboard');
+$routes->get('/', 'Home::index');
+$routes->get('/login', 'Home::index');
+$routes->post('/login/proses', 'Home::login');
+$routes->get('/logout', 'Home::logout');
+
+$routes->get('admin/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
+
+$routes->get('perusahaan/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
+
+$routes->get('pelamar/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
+
 

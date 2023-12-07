@@ -7,52 +7,6 @@ use App\Controllers\BaseController;
 
 class UserController extends BaseController
 {
-    public function index(): string
-    {
-        return view('login/login');
-    }
-
-    public function dashboard()
-    {
-        $username = $this->request->getVar('username');
-        $password = $this->request->getVar('password');
-
-        // Validasi input
-        if (empty($username) || empty($password)) {
-            session()->setFlashdata('error', 'Harap masukkan username dan password');
-            return redirect()->back();
-        }
-
-        // Ambil data user dari database
-        $users = new UserModel();
-        $dataUser = $users->where('username', $username)->first();
-
-        // dd(is_array($dataUser));
-        // Verifikasi keberadaan username dan pastikan dataUser adalah objek, bukan array
-        if (!empty($dataUser) && is_array($dataUser)) {
-            
-            // Verifikasi password
-            if (password_verify($password, $dataUser['password'])) {
-                // Sukses login
-                session()->set([
-                    'username' => $dataUser['username'],
-                    'name' => $dataUser['name'],
-                    'logged_in' => TRUE
-                ]);
-                return redirect()->to(base_url('/home'));
-            } else {
-                // Password tidak cocok
-                session()->setFlashdata('error', 'Password yang dimasukkan salah');
-                return redirect()->back();
-            }
-        } else {
-            dd('situ');
-            // Username tidak ditemukan atau dataUser bukan objek
-            session()->setFlashdata('error', 'Username tidak ditemukan');
-            return redirect()->back();
-        }
-    }
-
 
     public function register(): string
     {
@@ -91,6 +45,6 @@ class UserController extends BaseController
             'status' => $statusValue
         ]);
 
-        return redirect()->to('/login');
+        return redirect()->to('login');
     }
 }
