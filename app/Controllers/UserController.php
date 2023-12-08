@@ -15,8 +15,8 @@ class UserController extends BaseController
         $users = new PelamarModel();
 
         $data = $user->where('id', session('id'))->first();
-        $detail = $users->where('id', session('id'))->first();
-        return view('profile', $data);
+        $detail = $users->where('id_user', $data['id'])->first();
+        return view('profile', $data, $detail);
     }
 
     public function register(): string
@@ -98,13 +98,18 @@ class UserController extends BaseController
 
         $agama = $this->request->getPost('agama');
         $gender = $this->request->getPost('gender');
+        $id_user = $this->request->getVar('id_user');
+
+        if (!$id_user) {
+            return redirect()->back()->with('error', 'ID pengguna tidak valid');
+        }
 
         $agamaValue = $agamaOpsi[$agama] ?? null;
         $genderValue = $genderOpsi[$gender] ?? null;
 
         $user = new PelamarModel();
-        $inserted = $user->insert([
-            'id_user' => $this->request->getVar('id_user'),
+        $user->insert([
+            'id_user' => $id_user,
             'first_name' => $this->request->getVar('first_name'),
             'last_name' => $this->request->getVar('last_name'),
             'gender' => $genderValue,

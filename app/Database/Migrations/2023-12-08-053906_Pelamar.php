@@ -80,7 +80,7 @@ class Pelamar extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_user', 'users', 'id');
         $this->forge->createTable('pelamar');
     }
 
