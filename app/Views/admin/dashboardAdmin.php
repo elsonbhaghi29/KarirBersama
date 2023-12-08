@@ -14,6 +14,7 @@
 
     <!-- Main styles for this application-->
     <link href="<?= base_url('assets/css/style.css')?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/font.css') ?>" rel="stylesheet">
   
   </head>
 
@@ -224,7 +225,7 @@
                 <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
-                  </svg> Lock Account</a><a class="dropdown-item" href="#">
+                  </svg> Lock Account</a><a class="dropdown-item" href="<?= base_url('/logout') ?>">
                   <svg class="icon me-2">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
                   </svg> Logout</a>
