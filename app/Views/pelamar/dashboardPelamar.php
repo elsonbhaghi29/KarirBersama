@@ -78,7 +78,7 @@
                             <div class="dropdown-header bg-light py-2">
                                 <div class="fw-semibold">Settings</div>
                             </div>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="<?= base_url('profile') ?>">
                                 <svg class="icon me-2">
                                     <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                 </svg> Profile</a>
@@ -156,6 +156,9 @@
         <footer class="footer">
             <div>
                 © 2023 Karir Bersama
+            </div>
+            <div class="ms-auto">
+                Lamar Kerja Dimana-pun, Kapan-pun
             </div>
         </footer>
     </div>

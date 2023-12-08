@@ -14,6 +14,7 @@
 
     <!-- Main styles for this application-->
     <link href="<?= base_url('assets/css/style.css')?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/font.css') ?>" rel="stylesheet">
   
   </head>
 

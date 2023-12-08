@@ -80,6 +80,7 @@ class Filters extends BaseConfig
                 'admin/*',
                 'perusahaan/*',
                 'pelamar/*',
+                'profile', 'profile/*'
             ]
         ]
     ];

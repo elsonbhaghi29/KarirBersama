@@ -7,6 +7,11 @@ use App\Controllers\BaseController;
 
 class UserController extends BaseController
 {
+    public function index(){
+        $user = new UserModel();
+        $data = $user->where('id', session('id'))->first();
+        return view('profile', $data);
+    }
 
     public function register(): string
     {
