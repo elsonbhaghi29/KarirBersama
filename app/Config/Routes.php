@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 $routes->get('/home', 'home::index');
-$routes->get('/', 'UserController::index');
+// $routes->get('/', 'UserController::index');
 
 
 // Register

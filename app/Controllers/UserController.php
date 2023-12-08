@@ -46,7 +46,6 @@ class UserController extends BaseController
                 return redirect()->back();
             }
         } else {
-            dd('situ');
             // Username tidak ditemukan atau dataUser bukan objek
             session()->setFlashdata('error', 'Username tidak ditemukan');
             return redirect()->back();
@@ -91,6 +90,6 @@ class UserController extends BaseController
             'status' => $statusValue
         ]);
 
-        return redirect()->to('/login');
+        return redirect()->to('login');
     }
 }
