@@ -104,72 +104,81 @@
                 </div>
                 <div class="col-md-5 border-right">
                     <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Profile Settings</h4>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label class="labels">Nama Depan</label>
-                                <input type="text" class="form-control" placeholder="first name" value="<?php echo $detail['first_name']; ?>">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">Nama Belakang</label>
-                                <input type="text" class="form-control" value="<?php echo $detail['last_name']; ?>" placeholder="surname">
+                        <div class="col">
+                            <div class="form-check form-switch d-flex align-items-center">
+                                <label class="form-check-label fs-3" for="profileSettings">Profile Settings</label>
+                                <input class="form-check-input ms-2" type="checkbox" id="profileSettings">
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12">
-                                <label class="labels">Nomor Handphone</label>
-                                <input type="text" class="form-control" placeholder="enter phone number" value="<?php echo $detail['phone_number']; ?>">
+                        <form method="POST" action="<?= base_url('/edit/profile/proses/' . $user['username']); ?>">
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label class="labels">Nama Depan</label>
+                                    <input type="text" class="form-control" placeholder="first name" value="<?php echo $detail['first_name']; ?>" name="first_name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labels">Nama Belakang</label>
+                                    <input type="text" class="form-control" value="<?php echo $detail['last_name']; ?>" placeholder="Last Name" name="last_name">
+                                </div>
                             </div>
-                            <div class="col-md-12">
-                                <label class="labels">Alamat</label>
-                                <input type="text" class="form-control" placeholder="enter address line 1" value="<?php echo $detail['address']; ?>">
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label class="labels">Nomor Handphone</label>
+                                    <input type="text" class="form-control" placeholder="enter phone number" value="<?php echo $detail['phone_number']; ?>" name="phone_number">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Alamat</label>
+                                    <input type="text" class="form-control" placeholder="enter address line 1" value="<?php echo $detail['address']; ?>" name="address">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Email</label>
+                                    <input type="text" class="form-control" placeholder="enter address line 1" value="<?php echo $detail['email']; ?>" name="email">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label class="labels">Tempat Lahir</label>
-                                <input type="text" class="form-control" placeholder="country" value="<?php echo $detail['tempat_lahir']; ?>">
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label class="labels">Tempat Lahir</label>
+                                    <input type="text" class="form-control" placeholder="country" value="<?php echo $detail['tempat_lahir']; ?>" name="tempat_lahir">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labels">Tanggal Lahir</label>
+                                    <input type="date" class="form-control" value="<?php echo $detail['tanggal_lahir']; ?>" name="tanggal_lahir">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labels">Jenis Kelamin</label>
+                                    <select class="form-control" name="gender">
+                                        <?php
+                                        $gender = $detail['gender'];
+                                        $selectedLaki = ($gender == 1) ? 'selected' : '';
+                                        $selectedPerempuan = ($gender == 2) ? 'selected' : '';
+                                        ?>
+                                        <option value="1" <?php echo $selectedLaki; ?>>Laki-Laki</option>
+                                        <option value="2" <?php echo $selectedPerempuan; ?>>Perempuan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labels">Agama</label>
+                                    <select class="form-control" name="agama">
+                                        <?php
+                                        $agama = $detail['agama'];
+                                        $selectedKatolik = ($agama == 1) ? 'selected' : '';
+                                        $selectedIslam = ($agama == 2) ? 'selected' : '';
+                                        $selectedHindu = ($agama == 3) ? 'selected' : '';
+                                        $selectedBudha = ($agama == 4) ? 'selected' : '';
+                                        $selectedKonghucu = ($agama == 5) ? 'selected' : '';
+                                        ?>
+                                        <option value="1" <?php echo $selectedKatolik; ?>>Katolik</option>
+                                        <option value="2" <?php echo $selectedIslam; ?>>Islam</option>
+                                        <option value="3" <?php echo $selectedHindu; ?>>Hindu</option>
+                                        <option value="4" <?php echo $selectedBudha; ?>>Budha</option>
+                                        <option value="5" <?php echo $selectedKonghucu; ?>>Konghucu</option>
+                                    </select>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button class="btn btn-primary profile-button" type="submit" id="saveProfile">Save Profile</button>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="labels">Tanggal Lahir</label>
-                                <input type="date" class="form-control" value="<?php echo $detail['tanggal_lahir']; ?>" placeholder="state">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">Jenis Kelamin</label>
-                                <select class="form-control" name="gender">
-                                    <?php
-                                    $gender = $detail['gender'];
-                                    $selectedLaki = ($gender == 1) ? 'selected' : '';
-                                    $selectedPerempuan = ($gender == 2) ? 'selected' : '';
-                                    ?>
-                                    <option value="1" <?php echo $selectedLaki; ?>>Laki-Laki</option>
-                                    <option value="2" <?php echo $selectedPerempuan; ?>>Perempuan</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">Agama</label>
-                                <select class="form-control" name="gender">
-                                    <?php
-                                    $agama = $detail['agama'];
-                                    $selectedKatolik = ($agama == 1) ? 'selected' : '';
-                                    $selectedIslam = ($agama == 2) ? 'selected' : '';
-                                    $selectedHindu = ($agama == 3) ? 'selected' : '';
-                                    $selectedBudha = ($agama == 4) ? 'selected' : '';
-                                    $selectedKonghucu = ($agama == 5) ? 'selected' : '';
-                                    ?>
-                                    <option value="1" <?php echo $selectedKatolik; ?>>Katolik</option>
-                                    <option value="2" <?php echo $selectedIslam; ?>>Islam</option>
-                                    <option value="3" <?php echo $selectedHindu; ?>>Hindu</option>
-                                    <option value="4" <?php echo $selectedBudha; ?>>Budha</option>
-                                    <option value="5" <?php echo $selectedKonghucu; ?>>Konghucu</option>
-                                </select>
-                            </div>
-                            <div class="text-center mt-3">
-                                <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -194,6 +203,30 @@
     <script src="<?= base_url('assets/vendors/@coreui/chartjs/js/coreui-chartjs.js') ?>"></script>
     <script src="<?= base_url('assets/vendors/@coreui/utils/js/coreui-utils.js') ?>"></script>
     <script src="<?= base_url('assets/js/main.js') ?>"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const checkbox = document.getElementById('profileSettings');
+            const inputs = document.querySelectorAll('input[type="text"], input[type="date"], select');
+            const saveButton = document.getElementById('saveProfile');
+
+            function toggleInputs() {
+                inputs.forEach(input => {
+                    input.disabled = !checkbox.checked;
+                });
+                saveButton.disabled = !checkbox.checked;
+            }
+
+            checkbox.addEventListener('change', toggleInputs);
+
+            saveButton.addEventListener('click', function() {
+                // Lakukan aksi simpan profil di sini (contohnya: kirim data ke server)
+                // Jangan lupa untuk menambahkan logika penyimpanan profil yang sesuai di sini
+                console.log('Profil disimpan!'); // Contoh: Tampilkan pesan di console
+            });
+
+            toggleInputs();
+        });
+    </script>
 </body>
 
 </html>

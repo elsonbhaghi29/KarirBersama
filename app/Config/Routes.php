@@ -18,8 +18,11 @@ $routes->get('/login', 'Home::index');
 $routes->post('/login/proses', 'Home::login');
 $routes->get('/logout', 'Home::logout');
 
-// main
+// profile
 $routes->get('profile', 'UserController::index', ['filter' => 'authFilter']);
+$routes->post('edit/profile/proses/(:any)', 'UserController::update/$1', ['filter' => 'authFilter']);
+
+// main
 $routes->get('admin/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
 
 $routes->get('perusahaan/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);

@@ -41,14 +41,7 @@
                             <p class="text-medium-emphasis">Create your account</p>
                             <form method="post" action="<?= base_url(); ?>/register/kedua/proses">
                                 <?= csrf_field(); ?>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
-                                        <svg class="icon">
-                                            <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
-                                        </svg>
-                                    </span>
-                                    <input class="form-control" type="text" placeholder="Nama Depan" name="id_user" value="<?= $id ?>">
-                                </div>
+                                    <input class="form-control" type="text" placeholder="Nama Depan" name="id_user" value="<?= $id ?>" hidden>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">
                                         <svg class="icon">
