@@ -11,12 +11,13 @@ class UserController extends BaseController
 {
     public function index()
     {
-        $user = new UserModel();
-        $users = new PelamarModel();
+        $userModel = new UserModel();
+        $usersModel = new PelamarModel();
 
-        $data = $user->where('id', session('id'))->first();
-        $detail = $users->where('id_user', $data['id'])->first();
-        return view('profile', $data, $detail);
+        $data['user'] = $userModel->where('id', session('id'))->first();
+        $data['detail'] = $usersModel->where('id_user', $data['user']['id'])->first();
+
+        return view('profile', $data);
     }
 
     public function register(): string
