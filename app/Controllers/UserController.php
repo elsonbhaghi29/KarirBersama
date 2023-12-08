@@ -4,12 +4,16 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Controllers\BaseController;
+use App\Models\PelamarModel;
 
 class UserController extends BaseController
 {
     public function index(){
         $user = new UserModel();
+        $users = new PelamarModel();
+
         $data = $user->where('id', session('id'))->first();
+        $detail = $users->where('id', session('id'))->first();
         return view('profile', $data);
     }
 
@@ -43,13 +47,22 @@ class UserController extends BaseController
         }
 
         $users = new UserModel();
-        $users->insert([
+        $inserted = $users->insert([
             'username' => $this->request->getVar('username'),
             'password' => password_hash($this->request->getVar('password'), PASSWORD_BCRYPT),
             'name' => $this->request->getVar('nama'),
             'status' => $statusValue
         ]);
 
+        if($inserted){
+            $id_user = $users->insertID(); 
+
+            $detail = new PelamarModel();
+            $detail->insert([
+                    'id' => $id_user,
+                    'first_name' => $this->request->getVar('nama')
+                ]);
+        }
         return redirect()->to('login');
     }
 }

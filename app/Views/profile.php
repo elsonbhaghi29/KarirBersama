@@ -98,7 +98,7 @@
                 <div class="col-md-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                         <img class="avatar-img" src="<?= base_url('assets/img/avatars/8.jpg') ?>">
-                        <span class="font-weight-bold">Edogaru</span>
+                        <span class="font-weight-bold"><?= $name ?></span>
                         <span class="text-black-50">edogaru@mail.com.my</span>
                     </div>
                     <div class="text-center">
