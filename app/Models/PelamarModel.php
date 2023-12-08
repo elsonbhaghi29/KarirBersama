@@ -13,7 +13,7 @@ class PelamarModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'first_name', 'last_name', 'gender', 'agama', 'tempat_lahir', 'tanggal_lahir', 'phone_number', 'email', 'address'
+        'id_user', 'first_name', 'last_name', 'gender', 'agama', 'tempat_lahir', 'tanggal_lahir', 'phone_number', 'email', 'address'
     ];
 
     // Dates

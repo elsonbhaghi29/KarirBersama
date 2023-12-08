@@ -9,6 +9,8 @@ use CodeIgniter\Router\RouteCollection;
 // Register
 $routes->get('/register', 'UserController::register');
 $routes->post('/register/proses', 'UserController::registerProses');
+$routes->get('/registrasi/kedua', 'UserController::registrasiKedua');
+$routes->post('/register/kedua/proses', 'UserController::registrasiProsesKedua');
 
 // login
 $routes->get('/', 'Home::index');

@@ -14,6 +14,12 @@ class Pelamar extends Migration
                 'type' => 'INT',
                 'constraint' => 5,
                 'unsigned' => true,
+                'auto_increment' => true, 
+            ],
+            'id_user' => [
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => true,
             ],
             'first_name' => [
                 'type' => 'VARCHAR',
@@ -73,7 +79,8 @@ class Pelamar extends Migration
             ]
         ]);
 
-        $this->forge->addForeignKey('id', 'users', 'id');
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('pelamar');
     }
 
