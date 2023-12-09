@@ -32,7 +32,7 @@
                                 <?php endif; ?>
                                 <h1>Login</h1>
                                 <p class="text-medium-emphasis">Sign In to your account</p>
-                                <form method="post" action="<?= base_url(); ?>/login/proses">
+                                <form method="post" action="<?= base_url('/login/proses'); ?>">
                                     <?= csrf_field(); ?>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text">
@@ -55,9 +55,6 @@
                                             <button class="btn btn-primary px-4" type="submit">Login</button>
                                         </div>
                                 </form>
-                                <div class="col-6 text-end">
-                                    <button class="btn btn-link px-0" type="button">Forgot password?</button>
-                                </div>
                             </div>
                         </div>
                     </div>

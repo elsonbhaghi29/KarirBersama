@@ -39,7 +39,7 @@
                                 </div>
                             <?php endif; ?>
                             <p class="text-medium-emphasis">Create your account</p>
-                            <form method="post" action="<?= base_url(); ?>/register/kedua/proses">
+                            <form method="post" action="<?= base_url('/register/kedua/proses'); ?>">
                                 <?= csrf_field(); ?>
                                     <input class="form-control" type="text" placeholder="Nama Depan" name="id_user" value="<?= $id ?>" hidden>
                                 <div class="input-group mb-3">
@@ -48,7 +48,7 @@
                                             <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                         </svg>
                                     </span>
-                                    <input class="form-control" type="text" placeholder="Nama Depan" name="first_name">
+                                    <input class="form-control" type="text" placeholder="Nama Perusahaan" name="nama_perusahaan">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">
@@ -56,7 +56,7 @@
                                             <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                         </svg>
                                     </span>
-                                    <input class="form-control" type="text" placeholder="Nama Belakang" name="last_name">
+                                    <input class="form-control" type="text" placeholder="Pemilik" name="pemilik">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">
@@ -74,7 +74,7 @@
                                     </span>
                                     <input class="form-control" type="text" placeholder="Email" name="email">
                                 </div>
-                                <div class="input-group mb-3">
+                                <div class="input-group mb-1">
                                     <span class="input-group-text">
                                         <svg class="icon">
                                             <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-location-pin') ?>"></use>
@@ -82,37 +82,11 @@
                                     </span>
                                     <input class="form-control" type="text" placeholder="Alamat" name="address">
                                 </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
-                                        <svg class="icon">
-                                            <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-baby-carriage') ?>"></use>
-                                        </svg>
-                                    </span>
-                                    <input class="form-control" type="text" placeholder="Tempat Lahir" name="tempat_lahir">
-                                </div>
-                                <div class="input-group mb-1">
-                                    <span class="input-group-text">
-                                        <svg class="icon">
-                                            <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-calendar') ?>"></use>
-                                        </svg>
-                                    </span>
-                                    <input class="form-control" type="date" placeholder="Tanggal Lahir" name="tanggal_lahir">
-                                </div>
-                                <label for="agama">Agama:</label>
-                                <div class="input-group mb-1">
-                                    <select class="form-select" id="agama" name="agama">
-                                        <option value="katolik">Katolik</option>
-                                        <option value="islam">Islam</option>
-                                        <option value="hindu">Hindu</option>
-                                        <option value="budha">Budha</option>
-                                        <option value="konghucu">Konghucu</option>
-                                    </select>
-                                </div>
-                                <label for="gender">Jenis Kelamin:</label>
+                                <label for="jenis_perusahaan">Jenis Perusahaan:</label>
                                 <div class="input-group mb-4">
-                                    <select class="form-select" id="gender" name="gender">
-                                        <option value="laki">Laki-Laki</option>
-                                        <option value="perempuan">Perempuan</option>
+                                    <select class="form-select" id="jenis_perusahaan" name="jenis_perusahaan">
+                                        <option value="Swasta">Swasta</option>
+                                        <option value="Negeri">Negeri</option>
                                     </select>
                                 </div>
                                 <button class="btn btn-block btn-success" type="submit">Create Account</button>

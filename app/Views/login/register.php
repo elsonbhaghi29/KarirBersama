@@ -80,7 +80,8 @@
                                         <option value="perusahaan">Perusahaan</option>
                                     </select>
                                 </div>
-                                <button class="btn btn-block btn-success" type="submit">Create Account</button>
+                                <button class="btn btn-block btn-info" type="submit">Next</button>
+                                <span><a href="<?= base_url('/login') ?>">Login</a></span>
                             </form>
                         </div>
                     </div>

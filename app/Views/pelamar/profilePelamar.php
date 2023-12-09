@@ -78,7 +78,7 @@
                             <div class="dropdown-header bg-light py-2">
                                 <div class="fw-semibold">Settings</div>
                             </div>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="<?= base_url('profile') ?>">
                                 <svg class="icon me-2">
                                     <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                 </svg> Profile</a>
@@ -110,7 +110,7 @@
                                 <input class="form-check-input ms-2" type="checkbox" id="profileSettings">
                             </div>
                         </div>
-                        <form method="POST" action="<?= base_url('/edit/profile/proses/' . $user['username']); ?>">
+                        <form method="POST" action="<?= base_url('/edit/profile/proses/ketiga/' . $user['username']); ?>">
                             <div class="row mt-2">
                                 <div class="col-md-6">
                                     <label class="labels">Nama Depan</label>
