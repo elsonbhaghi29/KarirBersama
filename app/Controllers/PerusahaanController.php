@@ -33,7 +33,7 @@ class PerusahaanController extends BaseController
         }
 
         $jenisOpsi = [
-            'Swasta' => 1, 'Negeri' => 2
+            'Swasta' => 1, 'Negeri' => 2 
         ];
 
         $jenis = $this->request->getPost('jenis_perusahaan');
@@ -43,7 +43,12 @@ class PerusahaanController extends BaseController
             return redirect()->back()->with('error', 'ID pengguna tidak valid');
         }
 
-        $jenisValue = $jenisOpsi[$jenis] ?? null;
+        $jenisValue = 0;
+        if($jenis == 'Swasta'){
+            $jenisValue = 1;
+        } else{
+            $jenisValue = 2;
+        }
 
         $user = new PerusahaanModel();
         $user->insert([

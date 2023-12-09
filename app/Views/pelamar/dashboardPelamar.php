@@ -102,8 +102,8 @@
                             <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                                 <div>
                                     <div class="fs-3 fw-semibold">
-                                        26K
-                                        <span class="fs-6 fw-normal">Perusahaan</span>
+                                        <?php echo count($lowongan) ?>
+                                        <span class="fs-6 fw-normal">Pekerjaan</span>
                                     </div>
                                     <div class="mt-2 fw-bold fs-4">Lowongan Kerja</div>
                                 </div>
@@ -141,26 +141,78 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <h4 class="card-title mb-0">Pelamar</h4>
-                                <div class="small text-medium-emphasis">January - July 2022</div>
+                                <h4 class="card-title mb-0">Daftar Lowongan Pekerjaan</h4>
                             </div>
                         </div>
-                        <div class="c-chart-wrapper" style="height:300px;margin-top:40px;">
+                        <div class="table-responsive mt-4">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Nama Perusahaan</th>
+                                        <th scope="col">Nama Pekerjaan</th>
+                                        <th scope="col">Posisi</th>
+                                        <th scope="col">Deskripsi</th>
+                                        <th scope="col">Batas Lamaran</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $maxRows = 2; ?>
+                                    <?php foreach ($lowongan as $index => $item) : ?>
+                                        <?php if ($index < $maxRows) : ?>
+                                            <tr>
+                                                <td scope="row"><?php echo (int)$index + 1; ?></td>
+                                                <td>
+                                                    <?php
+                                                    $idPerusahaan = $item['id_perusahaan'];
+                                                    $namaPerusahaan = '';
+                                                    foreach ($perusahaan as $perusahaanItem) {
+                                                        if ($perusahaanItem['id'] === $idPerusahaan) {
+                                                            $namaPerusahaan = $perusahaanItem['nama_perusahaan'];
+                                                            break;
+                                                        }
+                                                    }
+                                                    echo $namaPerusahaan;
+                                                    ?>
+                                                </td>
+                                                <td><?php echo $item['nama_pekerjaan']; ?></td>
+                                                <td><?php echo $item['posisi']; ?></td>
+                                                <td class="wrap-text"><?php echo $item['deskripsi']; ?></td>
+                                                <td><?php echo $item['batas_post']; ?></td>
+                                                <td><?php echo ($item['status'] == 1) ? 'Open' : 'Close'; ?></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-block btn-info">Lihat</a>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    <?php if (count($lowongan) > $maxRows) : ?>
+                                        <tr>
+                                            <td colspan="8">
+                                                <a href="#" class="btn btn-link">See more</a>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
 
 
-        <footer class="footer">
-            <div>
-                © 2023 Karir Bersama
-            </div>
-            <div class="ms-auto">
-                Lamar Kerja Dimana-pun, Kapan-pun
-            </div>
-        </footer>
+    <footer class="footer">
+        <div>
+            © 2023 Karir Bersama
+        </div>
+        <div class="ms-auto">
+            Lamar Kerja Dimana-pun, Kapan-pun
+        </div>
+    </footer>
     </div>
 
 

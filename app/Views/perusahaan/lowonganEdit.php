@@ -21,62 +21,10 @@
 </head>
 
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
-        <div class="sidebar-brand d-none d-md-flex">
-            <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-                <use xlink:href="<?= base_url('assets/brand/coreui.svg#full') ?>"></use>
-            </svg>
-        </div>
-
-        <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('pelamar/dashboard') ?>">
-                    <svg class="nav-icon">
-                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-house') ?>"></use>
-                    </svg> Dashboard</a>
-            </li>
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
-                    <svg class="nav-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
-                    </svg> Master Data</a>
-                <ul class="nav-group-items">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('perusahaan/lowongan/kedua') ?>">
-                            <svg class="nav-icon">
-                                <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-briefcase') ?>"></use>
-                            </svg>
-                            <span class="nav-icon"></span> Input Lowongan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('perusahaan/daftar/lowongan/kedua') ?>">
-                            <svg class="nav-icon">
-                                <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-spreadsheet') ?>"></use>
-                            </svg>
-                            <span class="nav-icon"></span>Daftar Lowongan</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="typography.html">
-                    <svg class="nav-icon">
-                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-book') ?>"></use>
-                    </svg> Pelamar</a>
-            </li>
-
-        </ul>
-        <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
-    </div>
-
-    <!-- navbar -->
     <div class="wrapper d-flex flex-column min-vh-100 bg-light">
         <header class="header header-sticky mb-4">
             <div class="container-fluid">
-                <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
-                    <svg class="icon icon-lg">
-                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-menu') ?>"></use>
-                    </svg>
-                </button>
-
-                <ul class="header-nav ms-3">
+                <ul class="header-nav ms-3 ms-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <div class="avatar avatar-md">
@@ -110,12 +58,12 @@
             </div>
         </header>
 
-        <div class="body flex-grow-1 px-3">
+        <div class="body flex-grow-1 px-3 ms-5 me-5 px-5">
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="card-body p-4">
-                            <h3>Input Lowongan Pekerjaan</h3>
+                            <h3>Edit Lowongan Pekerjaan</h3>
                             <?php if (!empty(session()->getFlashdata('error'))) : ?>
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                     <h4>Periksa Entrian Form</h4>
@@ -123,10 +71,10 @@
                                     <?php echo session()->getFlashdata('error'); ?>
                                 </div>
                             <?php endif; ?>
-                            <p class="text-medium-emphasis">Silahkan Mengisi Informasi Yang Kosong</p>
-                            <form method="post" action="<?= base_url('proses/lowongan/kedua'); ?>">
+                            <form method="post" action="<?= base_url('perusahaan/daftar/lowongan/kedua/edit/proses'); ?>">
                                 <?= csrf_field(); ?>
                                 <input class="form-control" type="text" placeholder="Nama Depan" name="id_user" value="<?php echo $detail['id']; ?>" hidden>
+                                <input class="form-control" type="text" placeholder="Nama Depan" name="id" value="<?php echo $lowongan['id']; ?>" hidden>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">
                                         <svg class="icon">
@@ -157,7 +105,7 @@
                                             <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-briefcase') ?>"></use>
                                         </svg>
                                     </span>
-                                    <input class="form-control" type="text" placeholder="Nama Pekerjaan" name="nama_pekerjaan">
+                                    <input class="form-control" type="text" placeholder="Nama Pekerjaan" name="nama_pekerjaan" value="<?php echo $lowongan['nama_pekerjaan']; ?>">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">
@@ -165,7 +113,7 @@
                                             <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                         </svg>
                                     </span>
-                                    <input class="form-control" type="text" placeholder="Posisi" name="posisi">
+                                    <input class="form-control" type="text" placeholder="Posisi" name="posisi" value="<?php echo $lowongan['posisi']; ?>">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">
@@ -173,7 +121,7 @@
                                             <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-description') ?>"></use>
                                         </svg>
                                     </span>
-                                    <input class="form-control" type="text" placeholder="Deskripsi Pekerjaan" name="deskripsi">
+                                    <input class="form-control" type="text" placeholder="Deskripsi Pekerjaan" name="deskripsi" value="<?php echo $lowongan['deskripsi']; ?>">
                                 </div>
                                 <div class="input-group mb-1">
                                     <span class="input-group-text">
@@ -181,13 +129,19 @@
                                             <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-calendar') ?>"></use>
                                         </svg>
                                     </span>
-                                    <input class="form-control" type="date" placeholder="Tanggal Lahir" name="batas_post">
+                                    <input class="form-control" type="date" placeholder="Tanggal Lahir" name="batas_post" value="<?php echo $lowongan['batas_post']; ?>">
                                 </div>
-                                <label for="status">Status:</label>
+                                <label class="labels">Status</label>
                                 <div class="input-group mb-3">
-                                    <select class="form-select" id="status" name="status">
-                                        <option value="Open">Open</option>
-                                        <option value="Close">Close</option>
+
+                                    <select class="form-control" name="status">
+                                        <?php
+                                        $lowong = $lowongan['status'];
+                                        $open = ($lowong == 1) ? 'selected' : '';
+                                        $close = ($lowong == 2) ? 'selected' : '';
+                                        ?>
+                                        <option value="1" <?php echo $open; ?>>Open</option>
+                                        <option value="2" <?php echo $close; ?>>Close</option>
                                     </select>
                                 </div>
                                 <div class="input-group mb-3">
@@ -198,7 +152,7 @@
                                     </span>
                                     <input class="form-control" type="password" placeholder="Konfimasi Password" name="password">
                                 </div>
-                                <button class="btn btn-block btn-success" type="submit">Kirim Lowongan</button>
+                                <button class="btn btn-block btn-success" type="submit">Update</button>
                             </form>
                         </div>
                     </div>

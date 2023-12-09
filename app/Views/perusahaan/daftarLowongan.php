@@ -111,75 +111,47 @@
         </header>
 
         <div class="body flex-grow-1 px-3">
-            <div class="container-lg">
-                <!-- kotak atas -->
-                <div class="row">
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card mb-4 text-white bg-primary">
-                            <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                                <div>
-                                    <div class="fs-3 fw-semibold">
-                                        <?php echo count($lowongan) ?>
-                                        <span class="fs-6 fw-normal">Lowongan</span>
-                                    </div>
-                                    <div class="mt-2">
-                                        <?php
-                                        $openCount = 0;
-                                        $closeCount = 0;
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">Perusahaan</h4>
+                    <div class="table-responsive mt-4">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Nama Pekerjaan</th>
+                                    <th scope="col">Posisi</th>
+                                    <th scope="col">Deskripsi</th>
+                                    <th scope="col">Batas Lamaran</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Hapus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($lowongan as $index => $item) : ?>
+                                    <tr>
+                                        <td scope="row"><?php echo (int)$index + 1; ?></td>
+                                        <td><?php echo $item['nama_pekerjaan']; ?></td>
+                                        <td><?php echo $item['posisi']; ?></td>
+                                        <td class="wrap-text"><?php echo $item['deskripsi']; ?></td>
+                                        <td><?php echo $item['batas_post']; ?></td>
+                                        <td><?php echo ($item['status'] == 1) ? 'Open' : 'Close'; ?></td>
+                                        <td>
+                                            <a href="<?= base_url('perusahaan/daftar/lowongan/kedua/edit/' . $item['id']) ?>" class="btn btn-block btn-info">Edit</a>
+                                        </td>
+                                        <td>
+                                            <a href="<?= base_url('perusahaan/daftar/lowongan/kedua/delete/' . $item['id']) ?>" class="btn btn-block btn-danger delete-btn">Hapus</a>
+                                        </td>
 
-                                        foreach ($lowongan as $item) {
-                                            if ($item['status'] == 1) {
-                                                $openCount++;
-                                            } else if ($item['status'] == 2) {
-                                                $closeCount++;
-                                            }
-                                        }
-                                        ?>
-
-                                        <p>Open: <?= $openCount ?> | Close: <?= $closeCount ?></p>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="dropdown ms-3 mt-4">
-                                <a class="dropdown-item" href="<?= base_url('perusahaan/daftar/lowongan/kedua') ?>">Lihat</a>
-                            </div>
-                            <div class="c-chart-wrapper mx-3" style="height:10px;"></div>
-                        </div>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
 
-                    <!-- /.col-->
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card mb-4 text-white bg-info">
-                            <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                                <div>
-                                    <div class="fs-3 fw-semibold">
-                                        10K
-                                        <span class="fs-6 fw-normal">Pelamar</span>
-                                    </div>
-                                    <div class="mt-2 fw-bold fs-4">Melamar</div>
-                                </div>
-                            </div>
-                            <div class="dropdown ms-3 mt-4">
-                                <a class="dropdown-item" href="#">Lihat</a>
-                            </div>
-                            <div class="c-chart-wrapper mx-3" style="height:10px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- kotak bawah -->
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-0">Perusahaan</h4>
-                                <div class="small text-medium-emphasis">January - July 2022</div>
-                            </div>
-                        </div>
-                        <div class="c-chart-wrapper" style="height:300px;margin-top:40px;">
-                        </div>
+                    <div class="c-chart-wrapper" style="height:300px;margin-top:40px;">
+                        <!-- Isi bagian chart jika ada -->
                     </div>
                 </div>
             </div>
@@ -205,6 +177,22 @@
     <script src="<?= base_url('assets/vendors/@coreui/chartjs/js/coreui-chartjs.js') ?>"></script>
     <script src="<?= base_url('assets/vendors/@coreui/utils/js/coreui-utils.js') ?>"></script>
     <script src="<?= base_url('assets/js/main.js') ?>"></script>
+    <script>
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const confirmDelete = confirm('Anda yakin ingin menghapus data ini?');
+
+                if (confirmDelete) {
+                    window.location.href = e.target.getAttribute('href');
+                }
+            });
+        });
+    </script>
+
+
 
 </body>
 

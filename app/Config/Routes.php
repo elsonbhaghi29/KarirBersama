@@ -30,9 +30,14 @@ $routes->post('edit/profile/proses/kedua/(:any)', 'PerusahaanController::update/
 // main
 $routes->get('admin/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
 
+// perusahaan
 $routes->get('perusahaan/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
-$routes->get('lowongan/kedua', 'LowonganController::index', ['filter' => 'authFilter']);
+$routes->get('perusahaan/lowongan/kedua', 'LowonganController::index', ['filter' => 'authFilter']);
 $routes->post('proses/lowongan/kedua', 'LowonganController::postLowongan', ['filter' => 'authFilter']);
+$routes->get('perusahaan/daftar/lowongan/kedua', 'LowonganController::listLowongan', ['filter' => 'authFilter']);
+$routes->get('perusahaan/daftar/lowongan/kedua/edit/(:any)', 'LowonganController::editLowongan/$1', ['filter' => 'authFilter']);
+$routes->post('perusahaan/daftar/lowongan/kedua/edit/proses', 'LowonganController::editLowonganProses', ['filter' => 'authFilter']);
+$routes->get('perusahaan/daftar/lowongan/kedua/delete/(:any)', 'LowonganController::hapusLowonganProses/$1', ['filter' => 'authFilter']);
 
 $routes->get('pelamar/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
 
