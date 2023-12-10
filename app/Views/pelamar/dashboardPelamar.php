@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Dashboard || Pelamar</title>
-    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/favicon/android-icon-192x192.png') ?>">
+    <title>Dashboard || Karir Bersama</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/img/ELSON.png') ?>">
+
 
     <!-- Vendors styles-->
     <link rel="stylesheet" href="<?= base_url('assets/vendors/simplebar/css/simplebar.css') ?>">
@@ -24,9 +25,7 @@
     <!-- Sidebar -->
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
         <div class="sidebar-brand d-none d-md-flex">
-            <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-                <use xlink:href="<?= base_url('assets/brand/coreui.svg#full') ?>"></use>
-            </svg>
+            <img src="<?= base_url('assets/img/ELSON.png') ?>" width="100px">
         </div>
 
         <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
@@ -35,12 +34,12 @@
                         <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-house') ?>"></use>
                     </svg> Dashboard</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="colors.html">
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('pelamar/daftar/lowongan') ?>">
                     <svg class="nav-icon">
                         <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-briefcase') ?>"></use>
                     </svg> Lowongan Kerja</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="typography.html">
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('pelamar/lowongan/daftar') ?>">
                     <svg class="nav-icon">
                         <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-book') ?>"></use>
                     </svg> Lamaran</a>
@@ -110,26 +109,7 @@
 
                             </div>
                             <div class="dropdown ms-3 mt-4">
-                                <a class="dropdown-item" href="#">Lihat</a>
-                            </div>
-                            <div class="c-chart-wrapper mx-3" style="height:10px;"></div>
-                        </div>
-                    </div>
-
-                    <!-- /.col-->
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card mb-4 text-white bg-info">
-                            <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                                <div>
-                                    <div class="fs-3 fw-semibold">
-                                        10K
-                                        <span class="fs-6 fw-normal">Lamaran</span>
-                                    </div>
-                                    <div class="mt-2 fw-bold fs-4">Melamar</div>
-                                </div>
-                            </div>
-                            <div class="dropdown ms-3 mt-4">
-                                <a class="dropdown-item" href="#">Lihat</a>
+                                <a class="dropdown-item" href="<?= base_url('pelamar/lowongan/daftar') ?>">Lihat</a>
                             </div>
                             <div class="c-chart-wrapper mx-3" style="height:10px;"></div>
                         </div>
@@ -154,13 +134,18 @@
                                         <th scope="col">Posisi</th>
                                         <th scope="col">Deskripsi</th>
                                         <th scope="col">Batas Lamaran</th>
-                                        <th scope="col">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $maxRows = 2; ?>
-                                    <?php foreach ($lowongan as $index => $item) : ?>
-                                        <?php if ($index < $maxRows) : ?>
+                                    <?php
+                                    $maxRows = 2;
+                                    $appliedJobs = array_column($apply, 'id_job'); // Mengambil ID pekerjaan dari data apply
+                                    $count = 0;
+
+                                    foreach ($lowongan as $index => $item) :
+                                        if (!in_array($item['id'], $appliedJobs) && $count < $maxRows) : // Memeriksa lowongan yang belum dilamar
+                                            $count++;
+                                    ?>
                                             <tr>
                                                 <td scope="row"><?php echo (int)$index + 1; ?></td>
                                                 <td>
@@ -180,21 +165,23 @@
                                                 <td><?php echo $item['posisi']; ?></td>
                                                 <td class="wrap-text"><?php echo $item['deskripsi']; ?></td>
                                                 <td><?php echo $item['batas_post']; ?></td>
-                                                <td><?php echo ($item['status'] == 1) ? 'Open' : 'Close'; ?></td>
                                                 <td>
-                                                    <a href="#" class="btn btn-block btn-info">Lihat</a>
+                                                    <a href="<?= base_url('pelamar/lowongan/apply/' . $item['id']) ?>" class="btn btn-block btn-info">Lamar</a>
                                                 </td>
                                             </tr>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                    <?php if (count($lowongan) > $maxRows) : ?>
+                                    <?php
+                                        endif;
+                                    endforeach;
+                                    ?>
+                                    <?php if ($count >= $maxRows) : ?>
                                         <tr>
                                             <td colspan="8">
-                                                <a href="#" class="btn btn-link">See more</a>
+                                                <a href="<?= base_url('pelamar/daftar/lowongan') ?>" class="btn btn-link">See more</a>
                                             </td>
                                         </tr>
                                     <?php endif; ?>
                                 </tbody>
+
                             </table>
                         </div>
                     </div>

@@ -6,6 +6,8 @@ use App\Models\UserModel;
 use App\Models\LowonganModel;
 use App\Models\PerusahaanModel;
 use App\Controllers\BaseController;
+use App\Database\Migrations\ApplyJob;
+use App\Models\ApplyJobModel;
 use App\Models\PelamarModel;
 
 class Home extends BaseController
@@ -62,23 +64,49 @@ class Home extends BaseController
         $user = new UserModel();
         $lowongan = new LowonganModel();
         $perusahaan = new PerusahaanModel();
+        $apply = new ApplyJobModel();
         $pelamar = new PelamarModel();
-        $data = $user->where('id', session('id'))->first();
 
-        if ($data['status'] == 1) {
-            return view('admin/dashboardAdmin');
+        // Ambil data user berdasarkan session('id')
+        $data['user'] = $user->where('id', session('id'))->first();
 
-        } elseif ($data['status'] == 2) {
-            $data['user'] = $user->where('id', session('id'))->first();
-            $data['detail'] = $perusahaan->where('id_user', $data['user']['id'])->first();
-            $data['lowongan'] = $lowongan->where('id_perusahaan', $data['detail']['id'])->findAll();
-            return view('perusahaan/dashboardPerusahaan', $data);
-            
-        } elseif ($data['status'] == 3) {
-            $data['user'] = $user->where('id', session('id'))->first();
-            $data['lowongan'] = $lowongan->findAll();
-            $data['perusahaan'] = $perusahaan->findAll();
-            return view('pelamar/dashboardPelamar', $data);
+        if (!$data['user']) {
+            // Handle jika user tidak ditemukan (sesuai kebutuhan)
+            return 'User not found';
+        }
+
+        $status = $data['user']['status'];
+
+        switch ($status) {
+            case 1:
+                $data['pelamar'] = $pelamar->findAll();
+                $data['usaha'] = $perusahaan->findAll();
+                $data['lowongan'] = $lowongan->findAll();
+
+                return view('admin/dashboardAdmin', $data);
+                break;
+
+            case 2:
+                $data['detail'] = $perusahaan->where('id_user', $data['user']['id'])->first();
+                $data['lowongan'] = $lowongan->where('id_perusahaan', $data['detail']['id'])->findAll();
+                $data['apply'] = $apply->findAll();
+
+                // Menambahkan inisialisasi $data untuk mengatasi "Undefined variable $data"
+                $data['data'] = $data;
+
+                return view('perusahaan/dashboardPerusahaan', $data);
+                break;
+
+            case 3:
+                $data['lowongan'] = $lowongan->findAll();
+                $data['perusahaan'] = $perusahaan->findAll();
+                $data['apply'] = $apply->where('id_user', session('id'))->findAll();
+                return view('pelamar/dashboardPelamar', $data);
+                break;
+            default:
+                // Handle jika status tidak sesuai (sesuai kebutuhan)
+                return 'Invalid status';
+                break;
         }
     }
 

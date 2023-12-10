@@ -137,11 +137,6 @@ class LowonganController extends BaseController
             return redirect()->back()->withInput();
         }
 
-        $statusOpsi = [
-            'Open' => 1,
-            'Close' => 2
-        ];
-
         $user = new UserModel();
         $id = session('id');
         $dataUser = $user->where('id', $id)->first();
@@ -157,7 +152,6 @@ class LowonganController extends BaseController
 
         $lowongan = new LowonganModel();
         $status = $this->request->getPost('status');
-        $statusValue = $statusOpsi[$status] ?? null;
         $inputPassword = $this->request->getVar('password');
         $idlowongan = $this->request->getVar('id');
 
@@ -168,7 +162,7 @@ class LowonganController extends BaseController
                 'deskripsi' => $this->request->getVar('deskripsi'),
                 'posisi' => $this->request->getVar('posisi'),
                 'batas_post' => $this->request->getVar('batas_post'),
-                'status' => $statusValue,
+                'status' => $status,
             ]);
             session()->setFlashdata('success', 'Lowongan berhasil diposting!');
             return redirect()->to('perusahaan/daftar/lowongan/kedua');

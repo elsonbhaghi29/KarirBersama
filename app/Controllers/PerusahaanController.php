@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Controllers\BaseController;
+use App\Models\ApplyJobModel;
+use App\Models\LowonganModel;
+use App\Models\PelamarModel;
 use App\Models\PerusahaanModel;
 
 class PerusahaanController extends BaseController
@@ -33,7 +36,7 @@ class PerusahaanController extends BaseController
         }
 
         $jenisOpsi = [
-            'Swasta' => 1, 'Negeri' => 2 
+            'Swasta' => 1, 'Negeri' => 2
         ];
 
         $jenis = $this->request->getPost('jenis_perusahaan');
@@ -44,9 +47,9 @@ class PerusahaanController extends BaseController
         }
 
         $jenisValue = 0;
-        if($jenis == 'Swasta'){
+        if ($jenis == 'Swasta') {
             $jenisValue = 1;
-        } else{
+        } else {
             $jenisValue = 2;
         }
 
@@ -95,19 +98,12 @@ class PerusahaanController extends BaseController
             return redirect()->back()->withInput();
         }
 
-        $jenisOpsi = [
-            'Swasta' => 1,
-            'Negeri' => 2
-        ];
-
         $jenis = $this->request->getPost('jenis_perusahaan');
         $id_user = $loggedInUserId;
 
         if (!$id_user) {
             return redirect()->back()->with('error', 'ID pengguna tidak valid');
         }
-
-        $jenisValue = $jenisOpsi[$jenis] ?? null;
 
         $perusahaanModel = new PerusahaanModel();
         $perusahaanData = $perusahaanModel->where('id_user', $id_user)->get()->getRow();
@@ -116,7 +112,7 @@ class PerusahaanController extends BaseController
             'id_user' => $id_user,
             'nama_perusahaan' => $this->request->getVar('nama_perusahaan'),
             'pemilik' => $this->request->getVar('pemilik'),
-            'jenis_perusahaan' => $jenisValue,
+            'jenis_perusahaan' => $jenis,
             'phone_number' => $this->request->getVar('phone_number'),
             'email' => $this->request->getVar('email'),
             'address' => $this->request->getVar('address'),
@@ -141,5 +137,58 @@ class PerusahaanController extends BaseController
                 return redirect()->back();
             }
         }
+    }
+
+    public function accPelamar()
+    {
+        $userModel = new UserModel();
+        $lowonganModel = new LowonganModel();
+        $perusahaanModel = new PerusahaanModel();
+        $pelamarModel = new PelamarModel();
+        $applyModel = new ApplyJobModel();
+
+        $user = $userModel->find(session('id'));
+        $usaha = $perusahaanModel->where('id_user', $user['id'])->first();
+        $loker = $lowonganModel->where('id_perusahaan', $usaha['id'])->findAll();
+        $lamar = $pelamarModel->findAll();
+        $lokerIds = array_column($loker, 'id');
+        $jobs = $applyModel->whereIn('id_job', $lokerIds)->findAll();
+
+        // dd($user, $usaha, $loker, $lamar, $jobs);
+        return view('perusahaan/daftarPelamar', [
+            'userData' => $user,
+            'usaha' => $usaha,
+            'loker' => $loker,
+            'lamar' => $lamar,
+            'jobs' => $jobs,
+        ]);
+    }
+
+    public function keputusan($id_user, $id_job, $putusan)
+    {
+        $userModel = new UserModel();
+        $pelamarModel = new PelamarModel();
+        $lowonganModel = new LowonganModel();
+        $applyModel = new ApplyJobModel();
+
+        $lamar = $pelamarModel->find($id_user);
+        $users = $userModel->find($lamar['id_user']);
+        $loker = $lowonganModel->find($id_job);
+
+        // Mencocokkan apply berdasarkan id_job dan id_user
+        $jobs = $applyModel->where('id_job', $loker['id'])->where('id_user', $users['id'])->first();
+
+        if ($jobs) {
+            $id_apply = $jobs['id'];
+            if($putusan == 2){
+                $value = 1;
+            }else{
+                $value = 2;
+            }
+            $applyModel->update($id_apply, ['status' => $value]);
+            return 'hai';
+        }
+
+        return 'Data apply tidak ditemukan';
     }
 }

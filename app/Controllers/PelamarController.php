@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\PelamarModel;
+use App\Models\ApplyJobModel;
+use App\Models\LowonganModel;
+use App\Models\PerusahaanModel;
 use App\Controllers\BaseController;
 
 class PelamarController extends BaseController
@@ -74,7 +77,10 @@ class PelamarController extends BaseController
     {
         $loggedInUserId = session('id');
         $user = new UserModel();
+        $pelamar = new PelamarModel();
+        $id = $pelamar->where('id_user', $loggedInUserId)->first();
         $users = $user->where('id', $loggedInUserId)->where('username', $username)->get()->getResult();
+        $params = $id['id'];
 
         if (!$users) {
             session()->setFlashdata('error', 'Username tidak cocok dengan pemilik sesi yang login!');
@@ -97,25 +103,16 @@ class PelamarController extends BaseController
             return redirect()->back()->withInput();
         }
 
-        $agamaOpsi = [
-            'Katolik' => 1, 'Islam' => 2, 'Hindu' => 3, 'Budha' => 4, 'Konghucu' => 5
-        ];
-        $genderOpsi = [
-            'Laki-Laki' => 1, 'Perempuan' => 2
-        ];
-
         $agama = $this->request->getPost('agama');
         $gender = $this->request->getPost('gender');
-
-        $agamaValue = $agamaOpsi[$agama] ?? null;
-        $genderValue = $genderOpsi[$gender] ?? null;
+        // dd($agama, $gender);
 
         $user = new PelamarModel();
-        $user->update($loggedInUserId, [
+        $user->update($params, [
             'first_name' => $this->request->getVar('first_name'),
             'last_name' => $this->request->getVar('last_name'),
-            'gender' => $genderValue,
-            'agama' => $agamaValue,
+            'gender' => $gender,
+            'agama' => $agama,
             'tempat_lahir' => $this->request->getVar('tempat_lahir'),
             'tanggal_lahir' => $this->request->getVar('tanggal_lahir'),
             'phone_number' => $this->request->getVar('phone_number'),
@@ -129,5 +126,23 @@ class PelamarController extends BaseController
             session()->setFlashdata('error', 'Tidak ada perubahan data atau ada kesalahan dalam pembaruan!');
             return redirect()->back();
         }
+    }
+
+    public function daftarLowongan()
+    {
+        $user = new UserModel();
+        $lowongan = new LowonganModel();
+        $perusahaan = new PerusahaanModel();
+        $apply = new ApplyJobModel();
+
+        $data = $user->where('id', session('id'))->first();
+        $data['user'] = $user->where('id', session('id'))->first();
+        $data['lowongan'] = $lowongan->where('status', 1)->findAll();
+        $data['perusahaan'] = $perusahaan->findAll();
+
+        // Ambil data apply sesuai dengan id yang sedang login
+        $data['applied_jobs'] = $apply->where('id_user', session('id'))->findAll();
+
+        return view('pelamar/daftarPekerjaan', $data);
     }
 }

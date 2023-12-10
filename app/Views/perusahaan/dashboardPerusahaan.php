@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Dashboard || Perusahaan</title>
-    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/favicon/android-icon-192x192.png') ?>">
+    <title>Dashboard || Karir Bersama</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/img/ELSON.png') ?>">
+
 
     <!-- Vendors styles-->
     <link rel="stylesheet" href="<?= base_url('assets/vendors/simplebar/css/simplebar.css') ?>">
@@ -24,9 +25,7 @@
     <!-- Sidebar -->
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
         <div class="sidebar-brand d-none d-md-flex">
-            <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-                <use xlink:href="<?= base_url('assets/brand/coreui.svg#full') ?>"></use>
-            </svg>
+            <img src="<?= base_url('assets/img/ELSON.png') ?>" width="100px">
         </div>
 
         <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
@@ -56,7 +55,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item"><a class="nav-link" href="typography.html">
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('perusahaan/daftar/pelamar/kedua/') ?>">
                     <svg class="nav-icon">
                         <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-book') ?>"></use>
                     </svg> Pelamar</a>
@@ -122,25 +121,7 @@
                                         <?php echo count($lowongan) ?>
                                         <span class="fs-6 fw-normal">Lowongan</span>
                                     </div>
-                                    <div class="mt-2">
-                                        <?php
-                                        $openCount = 0;
-                                        $closeCount = 0;
-
-                                        foreach ($lowongan as $item) {
-                                            if ($item['status'] == 1) {
-                                                $openCount++;
-                                            } else if ($item['status'] == 2) {
-                                                $closeCount++;
-                                            }
-                                        }
-                                        ?>
-
-                                        <p>Open: <?= $openCount ?> | Close: <?= $closeCount ?></p>
-
-                                    </div>
                                 </div>
-
                             </div>
                             <div class="dropdown ms-3 mt-4">
                                 <a class="dropdown-item" href="<?= base_url('perusahaan/daftar/lowongan/kedua') ?>">Lihat</a>
@@ -155,30 +136,24 @@
                             <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                                 <div>
                                     <div class="fs-3 fw-semibold">
-                                        10K
+                                        <?php
+                                        $applicants = array_filter($apply, function ($applyItem) use ($lowongan, $data) {
+                                            foreach ($lowongan as $lowonganItem) {
+                                                if ($lowonganItem['id'] == $applyItem['id_job'] && $lowonganItem['id_perusahaan'] == $data['detail']['id']) {
+                                                    return true;
+                                                }
+                                            }
+                                            return false;
+                                        });
+                                        echo count($applicants);
+                                        ?>
                                         <span class="fs-6 fw-normal">Pelamar</span>
                                     </div>
-                                    <div class="mt-2 fw-bold fs-4">Melamar</div>
+                                    <div class="mt-5">
+                                        <div class="c-chart-wrapper mx-3" style="height:10px;"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="dropdown ms-3 mt-4">
-                                <a class="dropdown-item" href="#">Lihat</a>
-                            </div>
-                            <div class="c-chart-wrapper mx-3" style="height:10px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- kotak bawah -->
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-0">Perusahaan</h4>
-                                <div class="small text-medium-emphasis">January - July 2022</div>
-                            </div>
-                        </div>
-                        <div class="c-chart-wrapper" style="height:300px;margin-top:40px;">
                         </div>
                     </div>
                 </div>

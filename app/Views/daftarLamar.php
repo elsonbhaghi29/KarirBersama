@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Daftar Lowongan || Karir Bersama</title>
+    <title>Daftar Lamaran || Karir Bersama</title>
     <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/img/ELSON.png') ?>">
 
 
@@ -22,7 +22,6 @@
 </head>
 
 <body>
-    <!-- Sidebar -->
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
         <div class="sidebar-brand d-none d-md-flex">
             <img src="<?= base_url('assets/img/ELSON.png') ?>" width="100px">
@@ -34,48 +33,25 @@
                         <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-house') ?>"></use>
                     </svg> Dashboard</a>
             </li>
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('pelamar/daftar/lowongan') ?>">
                     <svg class="nav-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
-                    </svg> Master Data</a>
-                <ul class="nav-group-items">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('perusahaan/lowongan/kedua') ?>">
-                            <svg class="nav-icon">
-                                <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-briefcase') ?>"></use>
-                            </svg>
-                            <span class="nav-icon"></span> Input Lowongan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('perusahaan/daftar/lowongan/kedua') ?>">
-                            <svg class="nav-icon">
-                                <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-spreadsheet') ?>"></use>
-                            </svg>
-                            <span class="nav-icon"></span>Daftar Lowongan</a>
-                    </li>
-                </ul>
+                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-briefcase') ?>"></use>
+                    </svg> Lowongan Kerja</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="typography.html">
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('pelamar/lowongan/daftar') ?>">
                     <svg class="nav-icon">
                         <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-book') ?>"></use>
-                    </svg> Pelamar</a>
+                    </svg> Lamaran</a>
             </li>
-
         </ul>
         <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
     </div>
-
     <!-- navbar -->
     <div class="wrapper d-flex flex-column min-vh-100 bg-light">
         <header class="header header-sticky mb-4">
-            <div class="container-fluid">
-                <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
-                    <svg class="icon icon-lg">
-                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-menu') ?>"></use>
-                    </svg>
-                </button>
+            <div class="container-fluid ">
 
-                <ul class="header-nav ms-3">
+                <ul class="header-nav ms-3 ms-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <div class="avatar avatar-md">
@@ -118,35 +94,45 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col">Perusahaan</th>
                                     <th scope="col">Nama Pekerjaan</th>
                                     <th scope="col">Posisi</th>
                                     <th scope="col">Deskripsi</th>
                                     <th scope="col">Batas Lamaran</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Edit</th>
-                                    <th scope="col">Hapus</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($lowongan as $index => $item) : ?>
                                     <tr>
                                         <td scope="row"><?php echo (int)$index + 1; ?></td>
+                                        <td><?php echo $item['nama_perusahaan']; ?></td>
                                         <td><?php echo $item['nama_pekerjaan']; ?></td>
                                         <td><?php echo $item['posisi']; ?></td>
                                         <td class="wrap-text"><?php echo $item['deskripsi']; ?></td>
                                         <td><?php echo $item['batas_post']; ?></td>
-                                        <td><?php echo ($item['status'] == 1) ? 'Open' : 'Close'; ?></td>
                                         <td>
-                                            <a href="<?= base_url('perusahaan/daftar/lowongan/kedua/edit/' . $item['id']) ?>" class="btn btn-block btn-info">Edit</a>
+                                            <?php
+                                            $status = 'Dalam Proses';
+                                            foreach ($applied_jobs as $job) {
+                                                if ($job['id_job'] == $item['id'] && $job['id_user'] == session('id')) {
+                                                    if ($job['status'] == 1) {
+                                                        echo 'Diterima';
+                                                    } elseif ($job['status'] ==  2) {
+                                                        echo 'Ditolak';
+                                                    } else {
+                                                        echo 'Proses';
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                            ?>
                                         </td>
-                                        <td>
-                                            <a href="<?= base_url('perusahaan/daftar/lowongan/kedua/delete/' . $item['id']) ?>" class="btn btn-block btn-danger delete-btn">Hapus</a>
-                                        </td>
-
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+
                     </div>
 
                     <div class="c-chart-wrapper" style="height:300px;margin-top:40px;">
@@ -155,44 +141,41 @@
                 </div>
             </div>
         </div>
+        <div>
+            <footer class="footer">
+                <div>
+                    © 2023 Karir Bersama
+                </div>
+                <div class="ms-auto">
+                    Lamar Kerja Dimana-pun, Kapan-pun
+                </div>
+            </footer>
+        </div>
 
 
-        <footer class="footer">
-            <div>
-                © 2023 Karir Bersama
-            </div>
-            <div class="ms-auto">
-                Lamar Kerja Dimana-pun, Kapan-pun
-            </div>
-        </footer>
-    </div>
 
+        <!-- CoreUI and necessary plugins-->
+        <script src="<?= base_url('assets/vendors/@coreui/coreui/js/coreui.bundle.min.js') ?>"></script>
+        <script src="<?= base_url('assets/vendors/simplebar/js/simplebar.min.js') ?> "></script>
+        <!-- Plugins and scripts required by this view-->
+        <script src="<?= base_url('assets/vendors/chart.js/js/chart.min.js') ?>"></script>
+        <script src="<?= base_url('assets/vendors/@coreui/chartjs/js/coreui-chartjs.js') ?>"></script>
+        <script src="<?= base_url('assets/vendors/@coreui/utils/js/coreui-utils.js') ?>"></script>
+        <script src="<?= base_url('assets/js/main.js') ?>"></script>
+        <script>
+            const deleteButtons = document.querySelectorAll('.delete-btn');
 
-    <!-- CoreUI and necessary plugins-->
-    <script src="<?= base_url('assets/vendors/@coreui/coreui/js/coreui.bundle.min.js') ?>"></script>
-    <script src="<?= base_url('assets/vendors/simplebar/js/simplebar.min.js') ?> "></script>
-    <!-- Plugins and scripts required by this view-->
-    <script src="<?= base_url('assets/vendors/chart.js/js/chart.min.js') ?>"></script>
-    <script src="<?= base_url('assets/vendors/@coreui/chartjs/js/coreui-chartjs.js') ?>"></script>
-    <script src="<?= base_url('assets/vendors/@coreui/utils/js/coreui-utils.js') ?>"></script>
-    <script src="<?= base_url('assets/js/main.js') ?>"></script>
-    <script>
-        const deleteButtons = document.querySelectorAll('.delete-btn');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const confirmDelete = confirm('Anda yakin ingin menghapus data ini?');
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                const confirmDelete = confirm('Anda yakin ingin menghapus data ini?');
-
-                if (confirmDelete) {
-                    window.location.href = e.target.getAttribute('href');
-                }
+                    if (confirmDelete) {
+                        window.location.href = e.target.getAttribute('href');
+                    }
+                });
             });
-        });
-    </script>
-
-
-
+        </script>
 </body>
 
 </html>

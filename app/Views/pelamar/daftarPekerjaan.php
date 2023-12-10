@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Daftar Lowongan || Karir Bersama</title>
+    <title>Daftar Pekerjaan || Karir Bersama</title>
     <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/img/ELSON.png') ?>">
-
 
     <!-- Vendors styles-->
     <link rel="stylesheet" href="<?= base_url('assets/vendors/simplebar/css/simplebar.css') ?>">
@@ -34,33 +33,16 @@
                         <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-house') ?>"></use>
                     </svg> Dashboard</a>
             </li>
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('pelamar/daftar/lowongan') ?>">
                     <svg class="nav-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
-                    </svg> Master Data</a>
-                <ul class="nav-group-items">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('perusahaan/lowongan/kedua') ?>">
-                            <svg class="nav-icon">
-                                <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-briefcase') ?>"></use>
-                            </svg>
-                            <span class="nav-icon"></span> Input Lowongan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('perusahaan/daftar/lowongan/kedua') ?>">
-                            <svg class="nav-icon">
-                                <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-spreadsheet') ?>"></use>
-                            </svg>
-                            <span class="nav-icon"></span>Daftar Lowongan</a>
-                    </li>
-                </ul>
+                        <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-briefcase') ?>"></use>
+                    </svg> Lowongan Kerja</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="typography.html">
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('pelamar/lowongan/daftar') ?>">
                     <svg class="nav-icon">
                         <use xlink:href="<?= base_url('assets/vendors/@coreui/icons/svg/free.svg#cil-book') ?>"></use>
-                    </svg> Pelamar</a>
+                    </svg> Lamaran</a>
             </li>
-
         </ul>
         <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
     </div>
@@ -112,41 +94,97 @@
         <div class="body flex-grow-1 px-3">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h4 class="card-title mb-0">Perusahaan</h4>
+                    <h4 class="card-title mb-0">Daftar Lowongan Pekerjaan</h4>
                     <div class="table-responsive mt-4">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col">Nama Perusahaan</th>
                                     <th scope="col">Nama Pekerjaan</th>
                                     <th scope="col">Posisi</th>
                                     <th scope="col">Deskripsi</th>
                                     <th scope="col">Batas Lamaran</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Edit</th>
-                                    <th scope="col">Hapus</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($lowongan as $index => $item) : ?>
-                                    <tr>
-                                        <td scope="row"><?php echo (int)$index + 1; ?></td>
-                                        <td><?php echo $item['nama_pekerjaan']; ?></td>
-                                        <td><?php echo $item['posisi']; ?></td>
-                                        <td class="wrap-text"><?php echo $item['deskripsi']; ?></td>
-                                        <td><?php echo $item['batas_post']; ?></td>
-                                        <td><?php echo ($item['status'] == 1) ? 'Open' : 'Close'; ?></td>
-                                        <td>
-                                            <a href="<?= base_url('perusahaan/daftar/lowongan/kedua/edit/' . $item['id']) ?>" class="btn btn-block btn-info">Edit</a>
-                                        </td>
-                                        <td>
-                                            <a href="<?= base_url('perusahaan/daftar/lowongan/kedua/delete/' . $item['id']) ?>" class="btn btn-block btn-danger delete-btn">Hapus</a>
-                                        </td>
+                                    <?php
+                                    $isApplied = false;
+                                    foreach ($applied_jobs as $job) {
+                                        if ($job['id_job'] == $item['id']) {
+                                            $isApplied = true;
+                                            break;
+                                        }
+                                    }
+                                    ?>
+                                    <?php if (!$isApplied) : ?>
+                                        <tr>
+                                            <td scope="row"><?php echo (int)$index + 1; ?></td>
+                                            <td>
+                                                <?php
+                                                $idPerusahaan = $item['id_perusahaan'];
+                                                $namaPerusahaan = '';
+                                                foreach ($perusahaan as $perusahaanItem) {
+                                                    if ($perusahaanItem['id'] === $idPerusahaan) {
+                                                        $namaPerusahaan = $perusahaanItem['nama_perusahaan'];
+                                                        break;
+                                                    }
+                                                }
+                                                echo $namaPerusahaan;
+                                                ?>
+                                            </td>
+                                            <td><?php echo $item['nama_pekerjaan']; ?></td>
+                                            <td><?php echo $item['posisi']; ?></td>
+                                            <td class="wrap-text"><?php echo $item['deskripsi']; ?></td>
+                                            <td><?php echo $item['batas_post']; ?></td>
+                                            <td>
+                                                <a href="<?= base_url('pelamar/lowongan/apply/' . $item['id']) ?>" class="btn btn-block btn-info">Lamar</a>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
 
-                                    </tr>
+                                <?php foreach ($lowongan as $index => $item) : ?>
+                                    <?php
+                                    $isApplied = false;
+                                    foreach ($applied_jobs as $job) {
+                                        if ($job['id_job'] == $item['id']) {
+                                            $isApplied = true;
+                                            break;
+                                        }
+                                    }
+                                    ?>
+                                    <?php if ($isApplied) : ?>
+                                        <tr>
+                                            <td scope="row"><?php echo (int)$index + 1; ?></td>
+                                            <td>
+                                                <?php
+                                                $idPerusahaan = $item['id_perusahaan'];
+                                                $namaPerusahaan = '';
+                                                foreach ($perusahaan as $perusahaanItem) {
+                                                    if ($perusahaanItem['id'] === $idPerusahaan) {
+                                                        $namaPerusahaan = $perusahaanItem['nama_perusahaan'];
+                                                        break;
+                                                    }
+                                                }
+                                                echo $namaPerusahaan;
+                                                ?>
+                                            </td>
+                                            <td><?php echo $item['nama_pekerjaan']; ?></td>
+                                            <td><?php echo $item['posisi']; ?></td>
+                                            <td class="wrap-text"><?php echo $item['deskripsi']; ?></td>
+                                            <td><?php echo $item['batas_post']; ?></td>
+                                            <td>
+                                                <!-- Button lamaran untuk data yang sudah dilamar -->
+                                                <button class="btn btn-block btn-info" disabled>Sudah Lamar</button>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+
                     </div>
 
                     <div class="c-chart-wrapper" style="height:300px;margin-top:40px;">

@@ -22,7 +22,6 @@ class UserController extends BaseController
             $data['detail'] = $PerusahaanModel->where('id_user', $data['user']['id'])->first();
 
             return view('perusahaan/profilePerusahaan', $data);
-
         } elseif ($id['status'] == 3) {
             $data['user'] = $userModel->where('id', session('id'))->first();
             $data['detail'] = $PelamarModel->where('id_user', $data['user']['id'])->first();
@@ -83,6 +82,43 @@ class UserController extends BaseController
             } elseif ($detail && $detail['status'] == 3) {
                 return redirect()->to('registrasi/ketiga');
             }
+        }
+    }
+
+    public function registrasiadmin()
+    {
+        return view('login/registerAdmin');
+    }
+
+    public function registrasiadminProses()
+    {
+        $validation = \Config\Services::validation();
+
+        $validate = [
+            'username' => 'required|min_length[4]|max_length[20]|is_unique[users.username]',
+            'password' => 'required|min_length[4]|max_length[50]',
+            'confirm-password' => 'matches[password]',
+            'nama' => 'required|min_length[4]|max_length[100]'
+        ];
+
+        if (!$validation->setRules($validate)->run($this->request->getPost())) {
+            $errorMessages = $validation->getErrors();
+
+            dd($errorMessages);
+            session()->setFlashdata('error', $validation->getErrors());
+            return redirect()->back()->withInput();
+        }
+
+        $users = new UserModel();
+        $inserted = $users->insert([
+            'username' => $this->request->getVar('username'),
+            'password' => password_hash($this->request->getVar('password'), PASSWORD_BCRYPT),
+            'name' => $this->request->getVar('nama'),
+            'status' => 1
+        ]);
+
+        if ($inserted) {
+            redirect()->to('login/login');
         }
     }
 }

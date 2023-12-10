@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/favicon/android-icon-192x192.png') ?>">
+    <title>Profil | Karir Bersama</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/img/ELSON.png') ?>">
+
 
 
     <link rel="stylesheet" href="<?= base_url('assets/css/profile.css') ?>">
@@ -24,9 +25,7 @@
 <body>
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
         <div class="sidebar-brand d-none d-md-flex">
-            <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-                <use xlink:href="<?= base_url('assets/brand/coreui.svg#full') ?>"></use>
-            </svg>
+            <img src="<?= base_url('assets/img/ELSON.png') ?>" width="100px">
         </div>
 
         <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
