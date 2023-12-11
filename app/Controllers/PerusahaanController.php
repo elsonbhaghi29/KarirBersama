@@ -186,9 +186,9 @@ class PerusahaanController extends BaseController
                 $value = 2;
             }
             $applyModel->update($id_apply, ['status' => $value]);
-            return 'hai';
+            return redirect()->back();
         }
 
-        return 'Data apply tidak ditemukan';
+        return redirect()->back();
     }
 }
