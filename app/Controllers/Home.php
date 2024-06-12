@@ -15,7 +15,7 @@ class Home extends BaseController
     public function index()
     {
         if (session('id')) {
-            return redirect()->to(base_url('/home'));
+            return redirect()->back();
         }
         return view('login/login');
     }

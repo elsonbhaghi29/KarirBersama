@@ -30,7 +30,6 @@ $routes->get('/logout', 'Home::logout');
 $routes->get('profile', 'UserController::index', ['filter' => 'authFilter']);
 $routes->post('edit/profile/proses/ketiga/(:any)', 'PelamarController::update/$1', ['filter' => 'authFilter']);
 $routes->post('edit/profile/proses/kedua/(:any)', 'PerusahaanController::update/$1', ['filter' => 'authFilter']);
-
 // main
 $routes->get('admin/dashboard', 'Home::dashboard', ['filter' => 'authFilter']);
 
